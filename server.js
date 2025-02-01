@@ -5,12 +5,13 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 
-const server = app.listen(5000, () => console.log("Server running on port 5000"));
+const port = process.env.PORT || 5000;  // Use the port assigned by Render or 5000 locally
+const server = app.listen(port, () => console.log(`Server running on port ${port}`));
 const wss = new WebSocket.Server({ server });
 
 wss.on("connection", (ws) => {
   console.log("New client connected");
-  
+
   ws.on("message", (message) => {
     console.log(`Received: ${message}`);
     wss.clients.forEach((client) => {
